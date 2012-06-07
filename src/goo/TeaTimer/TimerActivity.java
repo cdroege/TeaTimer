@@ -45,6 +45,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -64,10 +65,6 @@ public class TimerActivity extends Activity implements OnClickListener,OnNNumber
 	
 	/** Should the logs be shown */
 	private final static boolean LOG = true;
-	
-	/** Menu item ids */
-	private final static int PREF=0;
-	private final static int ABOUT=1;
 	
 	/** Macros for our dialogs */
 	private final static int NUM_PICKER_DIALOG = 0, ALERT_DIALOG = 1;
@@ -181,13 +178,10 @@ public class TimerActivity extends Activity implements OnClickListener,OnNNumber
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-    	MenuItem item = menu.add(0, PREF, 0, getResources().getString(R.string.prefs));
-    	MenuItem about = menu.add(1,1,0, getResources().getString(R.string.about));
-    	    	
-    	item.setIcon(android.R.drawable.ic_menu_preferences);
-    	about.setIcon(android.R.drawable.ic_menu_info_details);
+    	MenuInflater inflater = getMenuInflater();
+    	inflater.inflate(R.menu.menu, menu);
     	
-    	return super.onCreateOptionsMenu(menu);
+    	return true;
     }
     
 
@@ -197,11 +191,11 @@ public class TimerActivity extends Activity implements OnClickListener,OnNNumber
 	{  
 		switch(item.getItemId()){
 		
-			case PREF:
+			case R.id.pref:
 				startActivity(new Intent(this, TimerPrefActivity.class));	
 				break;
 				
-			case ABOUT:
+			case R.id.about:
 				//new TimerAboutDialog(this).show();
 				//break;
 				LayoutInflater li = LayoutInflater.from(this);
