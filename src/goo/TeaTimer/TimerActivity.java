@@ -231,7 +231,6 @@ public class TimerActivity extends Activity implements OnClickListener,OnNNumber
         SharedPreferences.Editor editor = mSettings.edit();
         editor.putInt("LastTime", mLastTime);
         editor.putInt("CurrentTime",mTime);
-        editor.putInt("DrawingIndex",mTimerAnimation.getIndex());
         editor.putInt("State", mCurrentState);
         
         switch(mCurrentState){
@@ -267,7 +266,6 @@ public class TimerActivity extends Activity implements OnClickListener,OnNNumber
     	// assumes the data has already been loaded?   
         mLastTime = mSettings.getInt("LastTime",0);    
         
-        mTimerAnimation.setIndex(mSettings.getInt("DrawingIndex",0));
         int state = mSettings.getInt("State",0);
         
         switch(state)

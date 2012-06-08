@@ -18,15 +18,15 @@ public class TimerPrefActivity extends PreferenceActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
+        // Enable to touch the icon in the ActionBar to get back to the main activity
+        ActionBar actionBar = getActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.xml.preferences);
         
         // Load the sounds
         ListPreference tone = (ListPreference)findPreference("NotificationUri");
-        
-        // Enable to touch the icon in the ActionBar to get back to the main activity
-        ActionBar actionBar = getActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
         	
     	String [] cols = { MediaStore.Audio.Media._ID, MediaStore.Audio.Media.TITLE};
     	

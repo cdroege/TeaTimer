@@ -1,7 +1,5 @@
 package goo.TeaTimer.Animation;
 
-import goo.TeaTimer.R;
-
 import java.util.Vector;
 
 import android.content.Context;
@@ -11,11 +9,10 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.preference.PreferenceManager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.animation.AnimationUtils;
 
-public class TimerAnimation extends View implements OnClickListener, OnSharedPreferenceChangeListener
+public class TimerAnimation extends View implements OnSharedPreferenceChangeListener
 {		
 	Vector<TimerDrawing> mDrawings = null;
 	int mIndex = 0;
@@ -49,21 +46,7 @@ public class TimerAnimation extends View implements OnClickListener, OnSharedPre
 		mDrawings.add(new CircleAnimation(context));
 		//mDrawings.add(new TrashCupAnimation(context));
 		mDrawings.add(new Teapot(context));
-		
-		setOnClickListener(this);
 	}
-
-	/**
-	 * TODO eventually we'll want to move this index into the preferences
-	 * @param i
-	 */
-	public void setIndex(int i){
-		if(i < 0 || i >= mDrawings.size()) i = 0;
-		mIndex = i;
-		invalidate();
-	}
-	
-	public int getIndex(){ return mIndex;}
 	
 	public void updateImage(int time,int max){
 		mLastTime = time;
@@ -77,18 +60,6 @@ public class TimerAnimation extends View implements OnClickListener, OnSharedPre
 		mDrawings.get(mIndex).updateImage(canvas, mLastTime, mLastMax);
 	}
 	
-	public void onClick(View v){
-			
-		startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.fade_out));
-		
-		mIndex++;
-		mIndex %= mDrawings.size();
-		
-		startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.fade_in));
-	
-		invalidate();
-	}
-	
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 		
 		if(key.equals("Theme")){	
@@ -96,7 +67,11 @@ public class TimerAnimation extends View implements OnClickListener, OnSharedPre
 			{
 				drawing.configure();
 			}
-		}	
+		} else if(key.equals("Animation")) {
+			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
+			mIndex = Integer.parseInt(prefs.getString("Animation", "0"));
+			Log.i("Timer", "Set to " + mIndex);
+		}
 		invalidate();
 	}
 

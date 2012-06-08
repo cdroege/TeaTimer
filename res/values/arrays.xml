@@ -11,5 +11,15 @@
         <item>"1"</item>
         <item>"2"</item>
     </array>
+    
+    <array name="animations"> 
+        <item>"Circle"</item>
+        <item>"Teapot"</item>
+    </array>
+    
+    <array name="animationValues"> 
+        <item>"0"</item>
+        <item>"1"</item>
+    </array>
       
 </resources>
