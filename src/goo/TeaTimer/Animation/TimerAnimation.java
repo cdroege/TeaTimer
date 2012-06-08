@@ -9,7 +9,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.preference.PreferenceManager;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
 public class TimerAnimation extends View implements OnSharedPreferenceChangeListener
@@ -70,7 +69,6 @@ public class TimerAnimation extends View implements OnSharedPreferenceChangeList
 		} else if(key.equals("Animation")) {
 			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
 			mIndex = Integer.parseInt(prefs.getString("Animation", "0"));
-			Log.i("Timer", "Set to " + mIndex);
 		}
 		invalidate();
 	}
