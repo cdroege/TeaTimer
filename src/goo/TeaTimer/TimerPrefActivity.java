@@ -1,12 +1,14 @@
 package goo.TeaTimer;
 
 
+import android.app.ActionBar;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.PreferenceActivity;
 import android.provider.MediaStore;
-import android.util.Log;
+import android.view.MenuItem;
 
 public class TimerPrefActivity extends PreferenceActivity 
 {
@@ -21,6 +23,10 @@ public class TimerPrefActivity extends PreferenceActivity
         
         // Load the sounds
         ListPreference tone = (ListPreference)findPreference("NotificationUri");
+        
+        // Enable to touch the icon in the ActionBar to get back to the main activity
+        ActionBar actionBar = getActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
         	
     	String [] cols = { MediaStore.Audio.Media._ID, MediaStore.Audio.Media.TITLE};
     	
@@ -67,6 +73,7 @@ public class TimerPrefActivity extends PreferenceActivity
     	}
     	
     }
+    
     static private CharSequence [] concat( CharSequence[] A, CharSequence[] B) 
     {		
     	CharSequence[] C= new CharSequence[A.length+B.length];
@@ -74,5 +81,20 @@ public class TimerPrefActivity extends PreferenceActivity
     	System.arraycopy(B, 0, C, A.length, B.length);
 
     	   return C;
-    	}
+    }
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case android.R.id.home:
+				// app icon in action bar clicked; go home
+				Intent intent = new Intent(this, TimerActivity.class);
+				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(intent);
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+		}
+	}
+
 }
